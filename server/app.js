@@ -3,11 +3,27 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const { Sequelize } = require('sequelize');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+// const sequelize = new Sequelize('sql12579153', 'sql12579153', 'PyRh4gTzdP', {
+//   host: 'sql12.freesqldatabase.com',
+//   dialect: /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */ 'mysql'
+// });
+var sequelize = new Sequelize('mysql://uwpbajhc5goz1aun:tNwxYZalFbgQfZeBQ4pl@bbxp6v7xk2fff36pwkqd-mysql.services.clever-cloud.com:3306/bbxp6v7xk2fff36pwkqd');
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
