@@ -8,7 +8,10 @@ const ProductlineModel = require('./productline.model.js')
 const ServiceCenterModel = require('./servicecenter.model.js')
 const StoreModel = require('./store.model.js')
 const WarrantyModel = require('./warranty.model.js')
-
+const credentialModel = require('./credential.model')
+const RoleModel = require('./role.model')
+const ROLES = ["admin", "factory", "store", "servicecenter"]
+// const ROLES = ["factory", "store", "servicecenter"]
 
 FactoryModel.hasMany(StoreModel, {
     foreignKey: {
@@ -106,6 +109,16 @@ CustomerModel.hasMany(WarrantyModel, {
 })
 
 
+RoleModel.hasMany(credentialModel, {
+    foreignKey: "roleId"
+})
+
+credentialModel.hasMany(RoleModel, {
+  foreignKey: "userId"
+})
+  
+
+
 module.exports = {
     CustomerModel,
     FactoryModel,
@@ -116,5 +129,8 @@ module.exports = {
     ProductlineModel,
     ServiceCenterModel,
     StoreModel,
-    WarrantyModel
+    WarrantyModel,
+    credentialModel,
+    RoleModel,
+    ROLES
 }

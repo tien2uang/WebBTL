@@ -8,6 +8,8 @@ const productRecallRouter = require('./productRecall.router')
 const servicecenterRouter = require('./servicecenter.router')
 const storeRouter = require('./store.router')
 const warrantyRouter = require('./warranty.router')
+const CredentialRouter = require('./credential.router')
+const AuthRouter = require('./auth.router')
 
 module.exports = {
     customerRouter,
@@ -19,5 +21,7 @@ module.exports = {
     productlineRouter,
     servicecenterRouter,
     storeRouter,
-    warrantyRouter
+    warrantyRouter,
+    CredentialRouter,
+    AuthRouter
 }

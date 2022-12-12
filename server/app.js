@@ -1,12 +1,13 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require("cors");
+const app = express();
 
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
-
+const dbConfig = require('./config/db.config')
+const { RoleModel } = require("./models/index");
 const { 
   customerRouter, 
   factoryRouter, 
@@ -17,31 +18,22 @@ const {
   productRecallRouter, 
   servicecenterRouter, 
   storeRouter, 
-  warrantyRouter 
+  warrantyRouter,
+  CredentialRouter,
+  AuthRouter 
 } = require('./routers/index')
 
-var app = express();
-
-// const sequelize = new Sequelize('sql12579153', 'sql12579153', 'PyRh4gTzdP', {
-//   host: 'sql12.freesqldatabase.com',
-//   dialect: /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */ 'mysql'
-// });
-
-// sequelize
-//   .authenticate()
-//   .then(() => {
-//     console.log('Connection has been established successfully.');
-//   })
-//   .catch(err => {
-//     console.error('Unable to connect to the database:', err);
-//   });
 
 // view engine setup
 
+var corsOptions = {
+  origin: "http://localhost:8081"
+};
+
+app.use(cors(corsOptions));
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-const PORT = process.env.PORT || 8080
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin','*');
@@ -58,11 +50,36 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 
-const sequelize = require('./config/db.config')
+// database
 
+dbConfig.sync().then(() => {
+  console.log('Successfully connect to DB');
+  // initial();
+});
+
+
+// // catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+  //   next(createError(404));
+  // });
+  
+  // // error handler
+  // app.use(function(err, req, res, next) {
+    //   // set locals, only providing error in development
+    //   res.locals.message = err.message;
+    //   res.locals.error = req.app.get('env') === 'development' ? err : {};
+    
+    //   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
+
+
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Hello World!" });
+});
 
 app.use('/api/customer', customerRouter)
 app.use('/api/factory', factoryRouter)
@@ -74,28 +91,35 @@ app.use('/api/productRecall', productRecallRouter)
 app.use('/api/store', storeRouter)
 app.use('/api/servicecenter', servicecenterRouter)
 app.use('/api/warranty', warrantyRouter)
+app.use('/api/auth', AuthRouter) 
+app.use('/api/board', CredentialRouter)
 
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-// module.exports = app;
-
-
-sequelize.sync()
+// set port, listen for requests 
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-    console.log(`Listening on: http//localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}.`);
 });
+
+
+function initial() {
+  RoleModel.create({
+    id: 1,
+    name: "admin"
+  });
+ 
+  RoleModel.create({
+    id: 2,
+    name: "factory"
+  });
+ 
+  RoleModel.create({
+    id: 3,
+    name: "store"
+  });
+
+  RoleModel.create({
+    id: 4,
+    name: "service center"
+  });
+}
+
