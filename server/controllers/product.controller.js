@@ -18,3 +18,32 @@ exports.findOne = async (req, res) => {
         console.log(err);
     }
 }
+
+
+exports.addProduct = async (req, res) => {
+    if (!req.body.productID) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+        return;
+    }
+    const product = {
+        productID: req.body.productID,
+        productLine: req.body.productLine,
+        productName: req.body.productName,
+        description: req.body.description,
+        buyPrice: req.body.buyPrice,
+        quantityInStock: req.body.quantityInStock,
+        warrantyExpire: req.body.warrantyExpire,
+    };
+
+    ProductModel.create(product)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Some error occurred while creating the Tutorial."
+            });
+        });
+}

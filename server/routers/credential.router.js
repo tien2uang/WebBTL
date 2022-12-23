@@ -1,5 +1,5 @@
 const { authJwt } = require("../middleware");
-const { CredentialController } = require('../controllers/index')
+const { CredentialController, factoryController, storeController } = require('../controllers/index')
 const express = require('express')
 const router = express.Router()
 
@@ -17,11 +17,11 @@ router.get(
   CredentialController.storeBoard
 );
 
-// router.get(
-//   "/admin",
-//   [authJwt.verifyToken, authJwt.isAdmin],
-//   CredentialController.adminBoard
-// );
+router.get(
+  "/admin",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  CredentialController.adminBoard
+);
 
 router.get(
   "/servicecenter",

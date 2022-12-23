@@ -1,24 +1,5 @@
 const { FactoryModel } = require('../models/index')
 
-// create and save
-// exports.create = (req, res) => {
-//     if(!req.body.factoryID) {
-//         res.status(400).send({
-//             message: 'content cannot be empty'
-//         })
-//         return
-//     }
-
-//     const FactoryModel = {
-//         factoryID: req.body.factoryID,
-//         numberOfProduct: req.body.numberOfProduct,
-//         phone: req.body.phone,
-//         address: req.body.address,
-//         state: req.body.state,
-//         country: req.body.country
-//     }
-// }
-
 exports.findAll = async (req, res) => {
     try {
         const factories = await FactoryModel.findAll()
@@ -36,3 +17,32 @@ exports.findOne = async (req, res) => {
         console.log(err);
     }
 }
+
+// create and save
+exports.create = async (req, res) => {
+    if (!req.body.factoryID) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+        return;
+    }
+    const factories = {
+        factoryID: req.body.factoryID,
+        numberOfProduct: req.body.numberOfProduct,
+        phone: req.body.phone,
+        address: req.body.address,
+        state: req.body.state,
+        country: req.body.country,
+    };
+
+    FactoryModel.create(factories)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Some error occurred while creating the Tutorial."
+            });
+        });
+}
+

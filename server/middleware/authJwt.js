@@ -22,23 +22,23 @@ verifyToken = (req, res, next) => {
   });
 };
 
-// isAdmin = (req, res, next) => {
-//   credentialModel.findByPk(req.userId).then((user) => {
-//     user.getRoles().then((roles) => {
-//       for (let i = 0; i < roles.length; i++) {
-//         if (roles[i].name === "admin") {
-//           next();
-//           return;
-//         }
-//       }
+isAdmin = (req, res, next) => {
+  credentialModel.findByPk(req.userId).then((user) => {
+    user.getRoles().then((roles) => {
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === "admin") {
+          next();
+          return;
+        }
+      }
 
-//       res.status(403).send({
-//         message: "Require Admin Role!",
-//       });
-//       return;
-//     });
-//   });
-// };
+      res.status(403).send({
+        message: "Require Admin Role!",
+      });
+      return;
+    });
+  });
+};
 
 isStore = (req, res, next) => {
   credentialModel.findByPk(req.userId).then((user) => {
@@ -93,7 +93,7 @@ isServiceCenter = (req, res, next) => {
 
 const authJwt = {
   verifyToken: verifyToken,
-  // isAdmin: isAdmin,
+  isAdmin: isAdmin,
   isFactory: isFactory,
   isStore: isStore,
   isServiceCenter: isServiceCenter,

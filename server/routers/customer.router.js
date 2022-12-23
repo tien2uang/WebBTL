@@ -1,3 +1,4 @@
+const { authJwt } = require("../middleware");
 const express = require('express')
 const { customerController } = require('../controllers/index')
 

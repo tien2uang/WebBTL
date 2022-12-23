@@ -4,14 +4,18 @@ const { DataTypes } = require('sequelize')
 const OrderdetailModel = dbConfig.define(
     'orderdetails',
     {
-        orderID: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+            allowNull: false
+        },
+        orderID: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         productID: {
             type: DataTypes.STRING,
-            primaryKey: true,
             allowNull: false
         },
         quantityOrdered: {

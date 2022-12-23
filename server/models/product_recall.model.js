@@ -6,7 +6,6 @@ const ProductRecallModel = dbConfig.define(
     {
         productLine: {
             type: DataTypes.STRING,
-            primaryKey: true,
             allowNull: false
         },
         customerID: {

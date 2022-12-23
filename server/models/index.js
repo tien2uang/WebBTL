@@ -53,6 +53,14 @@ CustomerModel.hasMany(OrderModel, {
 })
 
 
+ProductModel.hasMany(OrderdetailModel, {
+    foreignKey: {
+        name: "productID",
+        allowNull: false
+    }
+})
+
+
 OrderModel.hasMany(OrderdetailModel, {
     foreignKey: {
         name: "orderID",

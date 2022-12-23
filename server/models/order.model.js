@@ -10,7 +10,7 @@ const OrderModel = dbConfig.define(
             allowNull: false
         },
         orderDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false
         },
         status: {

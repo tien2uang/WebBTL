@@ -4,19 +4,22 @@ const { DataTypes } = require('sequelize')
 const WarrantyModel = dbConfig.define(
     'warranty', 
     {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false
+        },
         storeID: {
             type: DataTypes.STRING,
-            primaryKey: true,
             allowNull: false
         },
         servicecenterID: {
             type: DataTypes.STRING,
-            primaryKey: true,
             allowNull: false
         },
         customerID: {
             type: DataTypes.STRING,
-            primaryKey: true,
             allowNull: false
         },
         warrantyStatus: {
