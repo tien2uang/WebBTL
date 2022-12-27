@@ -1,24 +1,28 @@
 const dbConfig = require('../config/db.config')
 const { DataTypes } = require('sequelize')
 
-const ProductlineModel = dbConfig.define(
-    'productlines', 
+const WarehouseModel = dbConfig.define(
+    'warehouse', 
     {
-        productLine: {
+        warehouseID: {
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false
         },
-        storeID: {
+        factoryID: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        description: {
+        address: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        importDate: {
-            type: DataTypes.DATEONLY,
+        productLine: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        numberOfProduct: {
+            type: DataTypes.INTEGER,
             allowNull: false
         }
     },
@@ -28,4 +32,10 @@ const ProductlineModel = dbConfig.define(
     }
 )
 
-module.exports = ProductlineModel
+WarehouseModel.associate = (models) => {
+    WarehouseModel.belongsTo(models.FactoryModel, {
+        foreignKey: 'factoryID'
+    })
+}
+
+module.exports = WarehouseModel

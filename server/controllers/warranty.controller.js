@@ -10,9 +10,11 @@ exports.findAll = async (req, res) => {
     }
 }
 
+
+
 exports.defecetiveByProductLine = async(req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
+        const [ warranty ] = await sequelize.query(
             "select warranty.warrantyStatus, \
             customers.customerID, customers.customerName, customers.customerPhone, customers.customerAddress, \
             products.* \
@@ -23,7 +25,7 @@ exports.defecetiveByProductLine = async(req, res) => {
             on customers.productID = products.productID \
             where productLine = :productline", 
             { replacements: { productline: req.params.productline } })
-        res.json(orders)
+        res.json(warranty)
     } catch (err) {
         console.log(err);
     }
@@ -32,14 +34,21 @@ exports.defecetiveByProductLine = async(req, res) => {
 
 exports.defecetiveByStoreID = async(req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
-            "select warranty.warrantyStatus, stores.storeID, stores.address \
+        const [ warranty ] = await sequelize.query(
+            "select id, warrantyStatus, \
+            stores.*,\
+            customers.customerID, customerName, customerPhone, customerAddress,\
+            products.*\
             from warranty \
             join stores \
             on warranty.storeID = stores.storeID \
+            join customers\
+            on warranty.customerID = customers.customerID\
+            join products\
+            on customers.productID = products.productID\
             where stores.storeID = :storeID", 
             { replacements: { storeID: req.params.storeID } })
-        res.json(orders)
+        res.json(warranty)
     } catch (err) {
         console.log(err);
     }
@@ -48,38 +57,83 @@ exports.defecetiveByStoreID = async(req, res) => {
 
 exports.defecetiveByServicecenterID = async(req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
-            "select warranty.warrantyStatus, \
-            servicecenters.servicecenterID, servicecenters.address \
+        const [ warranty ] = await sequelize.query(
+            "select id, warrantyStatus, \
+            servicecenters.servicecenterID, servicecenters.address,\
+            customers.customerID, customerName, customerPhone, customerAddress,\
+            products.*\
             from warranty \
             join servicecenters \
-            on warranty.servicecenterID = servicecenters.servicecenterID \
+            on warranty.servicecenterID = servicecenters.servicecenterID\
+            join customers\
+            on warranty.customerID = customers.customerID\
+            join products\
+            on customers.productID = products.productID \
             where servicecenters.servicecenterID = :servicecenterID",
             { replacements: { servicecenterID: req.params.servicecenterID } })
-        res.json(orders)
+        res.json(warranty)
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.defecetiveByProductLineAll = async(req, res) => {
+    try {
+        const [ warranty ] = await sequelize.query(
+            "select warranty.warrantyStatus, \
+            customers.customerID, customers.customerName, customers.customerPhone, customers.customerAddress, \
+            products.* \
+            from warranty \
+            join customers \
+            on warranty.customerID = customers.customerID \
+            join products \
+            on customers.productID = products.productID"
+        )
+        res.json(warranty)
     } catch (err) {
         console.log(err);
     }
 }
 
 
-exports.receiveFromServiceCenter = async(req, res) => {
+exports.defecetiveByStoreAll = async(req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
-            "select warranty.warrantyStatus, \
-            servicecenters.servicecenterID, servicecenters.address, \
-            customers.customerID, customers.customerName, customers.customerPhone, customers.customerAddress, \
-            products.* \
+        const [ warranty ] = await sequelize.query(
+            "select id, warrantyStatus, \
+            stores.*,\
+            customers.customerID, customerName, customerPhone, customerAddress,\
+            products.*\
+            from warranty \
+            join stores \
+            on warranty.storeID = stores.storeID \
+            join customers\
+            on warranty.customerID = customers.customerID\
+            join products\
+            on customers.productID = products.productID"
+        )
+        res.json(warranty)
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+exports.defecetiveByServicecenterAll = async(req, res) => {
+    try {
+        const [ warranty ] = await sequelize.query(
+            "select id, warrantyStatus, \
+            servicecenters.servicecenterID, servicecenters.address,\
+            customers.customerID, customerName, customerPhone, customerAddress,\
+            products.*\
             from warranty \
             join servicecenters \
-            on warranty.servicecenterID = servicecenters.servicecenterID \
-            join customers \
-            on warranty.customerID = customers.customerID \
-            join products \
-            on customers.productID = products.productID \
-            where servicecenters.servicecenterID = :servicecenterID",
-            { replacements: { servicecenterID: req.params.servicecenterID } })
-        res.json(orders)
+            on warranty.servicecenterID = servicecenters.servicecenterID\
+            join customers\
+            on warranty.customerID = customers.customerID\
+            join products\
+            on customers.productID = products.productID"
+        )
+        res.json(warranty)
     } catch (err) {
         console.log(err);
     }

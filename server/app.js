@@ -9,6 +9,7 @@ const app = express();
 const dbConfig = require('./config/db.config')
 const { RoleModel } = require("./models/index");
 const { 
+  adminRouter,
   customerRouter, 
   factoryRouter, 
   orderRouter, 
@@ -50,30 +51,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // database
-
 dbConfig.sync().then(() => {
   console.log('Successfully connect to DB');
   // initial();
 });
-
-
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-  //   next(createError(404));
-  // });
-  
-  // // error handler
-  // app.use(function(err, req, res, next) {
-    //   // set locals, only providing error in development
-    //   res.locals.message = err.message;
-    //   res.locals.error = req.app.get('env') === 'development' ? err : {};
-    
-    //   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
 
 
 // simple route
@@ -83,6 +65,7 @@ app.get("/", (req, res) => {
 
 app.use('/api/customer', customerRouter)
 app.use('/api/factory', factoryRouter)
+app.use('/api/admin', adminRouter)
 app.use('/api/order', orderRouter)
 app.use('/api/orderdetails', orderdetailsRouter)
 app.use('/api/product', productRouter)

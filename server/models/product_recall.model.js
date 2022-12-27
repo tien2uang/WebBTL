@@ -19,6 +19,11 @@ const ProductRecallModel = dbConfig.define(
         status: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        id: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+            allowNull: false
         }
     },
     {

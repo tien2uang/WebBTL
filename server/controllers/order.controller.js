@@ -20,7 +20,7 @@ exports.findOne = async (req, res) => {
     }
 }
 
-exports.sellByMonth = async(req, res) => {
+exports.salesByMonth = async(req, res) => {
     try {
         const [ orders ] = await sequelize.query(
             "select * from orders where month(orderDate) = :month", 
@@ -31,7 +31,7 @@ exports.sellByMonth = async(req, res) => {
     }
 }
 
-exports.sellByYear = async(req, res) => {
+exports.salesByYear = async(req, res) => {
     try {
         const [ orders ] = await sequelize.query(
             "select * from orders where year(orderDate) = :year", 
@@ -42,7 +42,7 @@ exports.sellByYear = async(req, res) => {
     }
 }
 
-exports.sellByQuarter = async(req, res) => {
+exports.salesByQuarter = async(req, res) => {
     try {
         const quarter = req.params.quarter
         if (quarter == 1) {
@@ -73,6 +73,120 @@ exports.sellByQuarter = async(req, res) => {
             )
             res.json(orders)
         }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.getSales = async(req, res) => {
+    try {
+        const [ orders ] = await sequelize.query(
+            "select orders.*, customerName, customerPhone, customerAddress, \
+            products.* from orders \
+            join customers \
+            on orders.customerID = customers.customerID \
+            join products \
+            on customers.productID = products.productID"
+        )
+        res.json(orders)
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.getSalesByStoreAll = async(req, res) => {
+    try {
+        const [ orders ] = await sequelize.query(
+            "select orders.*, \
+            customerName, customerPhone, customerAddress, \
+            products.*, \
+            stores.* \
+            from orders \
+            join customers \
+            on orders.customerID = customers.customerID \
+            join products \
+            on customers.productID = products.productID \
+            join productlines \
+            on products.productLine = productlines.productLine \
+            join stores \
+            on productlines.storeID = stores.storeID"
+        )
+        res.json(orders)
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.getSalesByStore = async(req, res) => {
+    try {
+        const [ orders ] = await sequelize.query(
+            "select orders.*, \
+            customerName, customerPhone, customerAddress, \
+            products.*, \
+            stores.* \
+            from orders \
+            join customers \
+            on orders.customerID = customers.customerID \
+            join products \
+            on customers.productID = products.productID \
+            join productlines \
+            on products.productLine = productlines.productLine \
+            join stores \
+            on productlines.storeID = stores.storeID\
+            where stores.storeID = :storeID",
+            { replacements: { storeID: req.params.storeID } })
+        res.json(orders)
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.getSalesByFactoriesAll = async(req, res) => {
+    try {
+        const [ orders ] = await sequelize.query(
+            "select orders.*, \
+            customerName, customerPhone, customerAddress, \
+            products.*, \
+            factories.* \
+            from orders \
+            join customers \
+            on orders.customerID = customers.customerID\
+            join products \
+            on customers.productID = products.productID\
+            join productlines\
+            on products.productLine = productlines.productLine\
+            join stores\
+            on productlines.storeID = stores.storeID\
+            join factories\
+            on stores.factoryID = factories.factoryID"
+        )
+        res.json(orders)
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.getSalesByFactories = async(req, res) => {
+    try {
+        const [ orders ] = await sequelize.query(
+            "select orders.*, \
+            customerName, customerPhone, customerAddress, \
+            products.*, \
+            factories.* \
+            from orders \
+            join customers \
+            on orders.customerID = customers.customerID\
+            join products \
+            on customers.productID = products.productID\
+            join productlines\
+            on products.productLine = productlines.productLine\
+            join stores\
+            on productlines.storeID = stores.storeID\
+            join factories\
+            on stores.factoryID = factories.factoryID\
+            where factories.factoryID = :factoryID",
+            { replacements: { factoryID: req.params.factoryID } })
+        res.json(orders)
     } catch (err) {
         console.log(err);
     }

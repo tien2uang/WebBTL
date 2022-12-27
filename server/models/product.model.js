@@ -31,6 +31,10 @@ const ProductModel = dbConfig.define(
         warrantyExpire: {
             type: DataTypes.DATEONLY,
             allowNull: false
+        },
+        importDate: {
+            type: DataTypes.DATEONLY,
+            allowNull: false
         }
     },
     {

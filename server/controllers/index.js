@@ -10,6 +10,7 @@ const storeController = require('./store.controller')
 const warrantyController = require('./warranty.controller')
 const CredentialController = require('./credential.controller')
 const AuthController = require('./auth.controller')
+const WarehouseController  = require('./warehouse.controller')
 
 module.exports = {
     customerController,
@@ -23,5 +24,6 @@ module.exports = {
     storeController,
     warrantyController,
     CredentialController,
-    AuthController
+    AuthController,
+    WarehouseController
 }

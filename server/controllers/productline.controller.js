@@ -19,7 +19,7 @@ exports.findOne = async (req, res) => {
 }
 
 
-exports.exportToStore = async (req, res) => {
+exports.create = async (req, res) => {
     if (!req.body.storeID) {
         res.status(400).send({
             message: "Content can not be empty!"
@@ -29,7 +29,8 @@ exports.exportToStore = async (req, res) => {
     const productline = {
         productLine: req.body.productLine,
         storeID: req.body.storeID,
-        description: req.body.description
+        description: req.body.description,
+        importDate: req.body.importDate,
     };
 
     ProductlineModel.create(productline)
@@ -39,7 +40,60 @@ exports.exportToStore = async (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the Tutorial."
+                    err.message || "Some error occurred while creating the productline."
             });
         });
 }
+
+exports.update = (req, res) => {
+    const productLine = req.body.productLine;
+
+    ProductlineModel.update(
+        {
+            storeID: req.body.storeID,
+            description: req.body.description,
+            importDate: req.body.importDate,
+        }, 
+        { where: { productLine: productLine }}
+        )
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "ProductlineModel was updated successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update ProductlineModel with id=${productLine}. Maybe ProductlineModel was not found or req.body is empty!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating ProductlineModel with id=" + productLine
+            });
+        });
+};
+
+exports.delete = (req, res) => {
+    const productLine = req.body.productLine;
+
+    ProductlineModel.destroy({
+        where: { productLine: productLine }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "productline was deleted successfully!"
+                });
+            } else {
+                res.send({
+                    message: `Cannot delete productline with id=${productLine}. Maybe productline was not found!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete productline with id=" + productLine
+            });
+        });
+};
