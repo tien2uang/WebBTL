@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -27,14 +28,16 @@ const {
 
 // view engine setup
 
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8080"
 };
 
-app.use(cors(corsOptions));
-
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.use(cors());
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin','*');
@@ -46,8 +49,7 @@ app.use((req, res, next) => {
 });
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
