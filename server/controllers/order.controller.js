@@ -6,7 +6,7 @@ exports.findAll = async (req, res) => {
     try {
         const orders = await OrderModel.findAll()
         res.json(orders)
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 }
@@ -20,10 +20,10 @@ exports.findOne = async (req, res) => {
     }
 }
 
-exports.salesByMonth = async(req, res) => {
+exports.salesByMonth = async (req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
-            "select * from orders where month(orderDate) = :month", 
+        const [orders] = await sequelize.query(
+            "select * from orders where month(orderDate) = :month",
             { replacements: { month: req.params.month } })
         res.json(orders)
     } catch (err) {
@@ -31,10 +31,10 @@ exports.salesByMonth = async(req, res) => {
     }
 }
 
-exports.salesByYear = async(req, res) => {
+exports.salesByYear = async (req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
-            "select * from orders where year(orderDate) = :year", 
+        const [orders] = await sequelize.query(
+            "select * from orders where year(orderDate) = :year",
             { replacements: { year: req.params.year } })
         res.json(orders)
     } catch (err) {
@@ -42,33 +42,33 @@ exports.salesByYear = async(req, res) => {
     }
 }
 
-exports.salesByQuarter = async(req, res) => {
+exports.salesByQuarter = async (req, res) => {
     try {
         const quarter = req.params.quarter
         if (quarter == 1) {
-            const [ orders ] = await sequelize.query(
-                "select * from orders where month(orderDate) in(:month)", 
+            const [orders] = await sequelize.query(
+                "select * from orders where month(orderDate) in(:month)",
                 { replacements: { month: ['1', '2', '3'] } }
             )
             res.json(orders)
         }
         else if (quarter == 2) {
-            const [ orders ] = await sequelize.query(
-                "select * from orders where month(orderDate) in(:month)", 
+            const [orders] = await sequelize.query(
+                "select * from orders where month(orderDate) in(:month)",
                 { replacements: { month: ['4', '5', '6'] } }
             )
             res.json(orders)
         }
         else if (quarter == 3) {
-            const [ orders ] = await sequelize.query(
-                "select * from orders where month(orderDate) in(:month)", 
+            const [orders] = await sequelize.query(
+                "select * from orders where month(orderDate) in(:month)",
                 { replacements: { month: ['7', '8', '9'] } }
             )
             res.json(orders)
         }
         else if (quarter == 4) {
-            const [ orders ] = await sequelize.query(
-                "select * from orders where month(orderDate) in(:month)", 
+            const [orders] = await sequelize.query(
+                "select * from orders where month(orderDate) in(:month)",
                 { replacements: { month: ['10', '11', '12'] } }
             )
             res.json(orders)
@@ -78,9 +78,9 @@ exports.salesByQuarter = async(req, res) => {
     }
 }
 
-exports.getSales = async(req, res) => {
+exports.getSales = async (req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
+        const [orders] = await sequelize.query(
             "select orders.*, customerName, customerPhone, customerAddress, \
             products.* from orders \
             join customers \
@@ -94,9 +94,9 @@ exports.getSales = async(req, res) => {
     }
 }
 
-exports.getSalesByStoreAll = async(req, res) => {
+exports.getSalesByStoreAll = async (req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
+        const [orders] = await sequelize.query(
             "select orders.*, \
             customerName, customerPhone, customerAddress, \
             products.*, \
@@ -117,9 +117,9 @@ exports.getSalesByStoreAll = async(req, res) => {
     }
 }
 
-exports.getSalesByStore = async(req, res) => {
+exports.getSalesByStore = async (req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
+        const [orders] = await sequelize.query(
             "select orders.*, \
             customerName, customerPhone, customerAddress, \
             products.*, \
@@ -141,9 +141,9 @@ exports.getSalesByStore = async(req, res) => {
     }
 }
 
-exports.getSalesByFactoriesAll = async(req, res) => {
+exports.getSalesByFactoriesAll = async (req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
+        const [orders] = await sequelize.query(
             "select orders.*, \
             customerName, customerPhone, customerAddress, \
             products.*, \
@@ -166,9 +166,9 @@ exports.getSalesByFactoriesAll = async(req, res) => {
     }
 }
 
-exports.getSalesByFactories = async(req, res) => {
+exports.getSalesByFactories = async (req, res) => {
     try {
-        const [ orders ] = await sequelize.query(
+        const [orders] = await sequelize.query(
             "select orders.*, \
             customerName, customerPhone, customerAddress, \
             products.*, \
@@ -190,4 +190,32 @@ exports.getSalesByFactories = async(req, res) => {
     } catch (err) {
         console.log(err);
     }
+}
+
+
+exports.create = async (req, res) => {
+    if (!req.body.orderID) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+        return;
+    }
+    const order = {
+        orderID: req.body.orderID,
+        orderDate: req.body.orderDate,
+        status: req.body.status,
+        comment: req.body.comment,
+        customerID: req.body.customerID,
+
+    };
+
+    OrderModel.create(order)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Some error occurred while creating the store."
+            });
+        });
 }

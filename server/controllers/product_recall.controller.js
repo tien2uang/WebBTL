@@ -5,7 +5,7 @@ exports.findAll = async (req, res) => {
     try {
         const productRecalls = await ProductRecallModel.findAll()
         res.json(productRecalls)
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 }
@@ -19,9 +19,9 @@ exports.findOne = async (req, res) => {
     }
 }
 
-exports.allRecall = async(req, res) => {
+exports.allRecall = async (req, res) => {
     try {
-        const [ recall ] = await sequelize.query(
+        const [recall] = await sequelize.query(
             "select product_recall.*,\
             customerName, customerPhone, customerAddress,\
             products.*\
@@ -37,9 +37,9 @@ exports.allRecall = async(req, res) => {
     }
 }
 
-exports.recallByProductLine = async(req, res) => {
+exports.recallByProductLine = async (req, res) => {
     try {
-        const [ recall ] = await sequelize.query(
+        const [recall] = await sequelize.query(
             "select product_recall.*,\
             customerName, customerPhone, customerAddress,\
             products.*\
@@ -48,7 +48,7 @@ exports.recallByProductLine = async(req, res) => {
             on product_recall.customerID = customers.customerID\
             join products\
             on customers.productID = products.productID\
-            where productLine = :productline", 
+            where products.productLine = :productline",
             { replacements: { productline: req.params.productline } })
         res.json(recall)
     } catch (err) {
@@ -56,9 +56,9 @@ exports.recallByProductLine = async(req, res) => {
     }
 }
 
-exports.recallByProductLineAll = async(req, res) => {
+exports.recallByProductLineAll = async (req, res) => {
     try {
-        const [ recall ] = await sequelize.query(
+        const [recall] = await sequelize.query(
             "select product_recall.*,\
             customerName, customerPhone, customerAddress,\
             products.*\
@@ -66,7 +66,7 @@ exports.recallByProductLineAll = async(req, res) => {
             join customers\
             on product_recall.customerID = customers.customerID\
             join products\
-            on customers.productID = products.productID", 
+            on customers.productID = products.productID",
         )
         res.json(recall)
     } catch (err) {
@@ -74,9 +74,9 @@ exports.recallByProductLineAll = async(req, res) => {
     }
 }
 
-exports.recallByServiceCenter = async(req, res) => {
+exports.recallByServiceCenter = async (req, res) => {
     try {
-        const [ recall ] = await sequelize.query(
+        const [recall] = await sequelize.query(
             "select product_recall.productLine, status\
             customerName, customerPhone, customerAddress,\
             products.*,\
@@ -96,9 +96,9 @@ exports.recallByServiceCenter = async(req, res) => {
     }
 }
 
-exports.recallByServiceCenterAll = async(req, res) => {
+exports.recallByServiceCenterAll = async (req, res) => {
     try {
-        const [ recall ] = await sequelize.query(
+        const [recall] = await sequelize.query(
             "select product_recall.productLine, status\
             customerName, customerPhone, customerAddress,\
             products.*,\
@@ -117,9 +117,9 @@ exports.recallByServiceCenterAll = async(req, res) => {
     }
 }
 
-exports.recallByStore = async(req, res) => {
+exports.recallByStore = async (req, res) => {
     try {
-        const [ recall ] = await sequelize.query(
+        const [recall] = await sequelize.query(
             "select product_recall.productLine, status\
             customerName, customerPhone, customerAddress,\
             products.*,\
@@ -141,9 +141,9 @@ exports.recallByStore = async(req, res) => {
     }
 }
 
-exports.recallByStoreAll = async(req, res) => {
+exports.recallByStoreAll = async (req, res) => {
     try {
-        const [ recall ] = await sequelize.query(
+        const [recall] = await sequelize.query(
             "select product_recall.productLine, status\
             customerName, customerPhone, customerAddress,\
             products.*,\

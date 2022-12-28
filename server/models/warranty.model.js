@@ -2,7 +2,7 @@ const dbConfig = require('../config/db.config')
 const { DataTypes } = require('sequelize')
 
 const WarrantyModel = dbConfig.define(
-    'warranty', 
+    'warranty',
     {
         id: {
             type: DataTypes.INTEGER,

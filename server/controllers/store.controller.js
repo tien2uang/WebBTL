@@ -5,7 +5,7 @@ exports.findAll = async (req, res) => {
     try {
         const stores = await StoreModel.findAll()
         res.json(stores)
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 }
@@ -50,9 +50,9 @@ exports.update = (req, res) => {
         {
             factoryID: req.body.factoryID,
             address: req.body.address
-        }, 
-        { where: { storeID: storeID }}
-        )
+        },
+        { where: { storeID: storeID } }
+    )
         .then(num => {
             if (num == 1) {
                 res.send({

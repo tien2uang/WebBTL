@@ -1,8 +1,8 @@
-/*local*/ 
+/*local*/
 module.exports = {
     HOST: 'localhost',
     USER: 'root',
-    PASSWORD: 'root',
-    DATABASE: 'test',
+    PASSWORD: '18112002aD@',
+    DATABASE: 'world',
     DIALECT: 'mysql'
 }
