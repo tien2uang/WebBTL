@@ -1,44 +1,66 @@
 const config = require("../config/auth.config");
-const { credentialModel, requestModel } = require('../models/index')
-const { Sequelize } = require('sequelize')
-const Op = Sequelize.Op
+const { credentialModel, requestModel } = require("../models/index");
+const { Sequelize } = require("sequelize");
+const Op = Sequelize.Op;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-
 exports.signup = (req, res) => {
-  credentialModel.create({
+  credentialModel
+    .create({
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
-      role: req.body.role
-    }).then(() => {
-      res.send({ message: "User registered successfully!" })
+      role: req.body.role,
     })
+    .then(() => {
+      res.send({ message: "User registered successfully!" });
+    });
 
-    requestModel.destroy
+  requestModel
+    .destroy({
+      where: { username: req.body.username },
+    })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: "Success!",
+        });
+      } else {
+        res.send({
+          message: `Cannot delete!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err,
+      });
+    });
 };
 
 exports.request = (req, res) => {
-  requestModel.create({
+  requestModel
+    .create({
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
-      role: req.body.role
-    }).then(() => {
-      res.send({ message: "Please wait while admin processing your request!" })
+      role: req.body.role,
     })
+    .then(() => {
+      res.send({ message: "Please wait while admin processing your request!" });
+    });
 };
 
-
 exports.signin = (req, res) => {
-  credentialModel.findOne({
-    where: {
-      username: req.body.username
-    }
-  })
-    .then(user => {
+  credentialModel
+    .findOne({
+      where: {
+        username: req.body.username,
+      },
+    })
+    .then((user) => {
       if (!user) {
         return res.status(404).send({ message: "User Not found." });
       }
@@ -51,23 +73,23 @@ exports.signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid Password!"
+          message: "Invalid Password!",
         });
       }
 
       var token = jwt.sign({ id: user.id }, config.secret, {
-        expiresIn: 86400 // 24 hours
+        expiresIn: 86400, // 24 hours
       });
 
-      var roles = "ROLE_" + user.role.toUpperCase()
-        res.status(200).send({
-          username: user.username,
-          email: user.email,
-          role: roles,
-          accessToken: token
+      var roles = "ROLE_" + user.role.toUpperCase();
+      res.status(200).send({
+        username: user.username,
+        email: user.email,
+        role: roles,
+        accessToken: token,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({ message: err.message });
     });
 };
