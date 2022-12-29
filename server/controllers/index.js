@@ -11,6 +11,8 @@ const requestController = require('./request.controller')
 const WarehouseController  = require('./warehouse.controller')
 const TransactionController  = require('./transaction.controller')
 const ExportToWarehouseController = require('./exportToWarehouse.controller')
+const ExportToStoreController = require('./exportToStore.controller')
+const credentialController = require('./credential.controller')
 
 module.exports = {
     factoryController,
@@ -25,5 +27,7 @@ module.exports = {
     WarehouseController,
     requestController,
     TransactionController,
-    ExportToWarehouseController
+    ExportToWarehouseController,
+    ExportToStoreController,
+    credentialController
 }

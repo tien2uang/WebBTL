@@ -31,18 +31,77 @@ exports.create = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Some error occurred while creating the transaction.",
+        message: err
       });
     });
 };
 
 
-exports.update = (req, res) => {
+exports.exportToStore = (req, res) => {
   TransactionModel.update(
       {
           received: "Received"
       },
-      { where: { id: req.body.id } }
+      { where: { 
+        destination: req.body.storeID, 
+        source: req.body.warehouseID 
+      } }
+      )
+      .then(num => {
+          if (num == 1) {
+              res.send({
+                  message: "TransactionModel was updated successfully."
+              });
+          } else {
+              res.send({
+                  message: `Cannot update TransactionModel with . Maybe TransactionModel was not found or req.body is empty!`
+              });
+          }
+      })
+      .catch(err => {
+          res.status(500).send({
+              message: err 
+          });
+      });
+};
+
+exports.exportToWarehouse = (req, res) => {
+  TransactionModel.update(
+      {
+          received: "Received"
+      },
+      { where: { 
+        destination: req.body.warehouseID, 
+        source: req.body.factoryID 
+      } }
+      )
+      .then(num => {
+          if (num == 1) {
+              res.send({
+                  message: "TransactionModel was updated successfully."
+              });
+          } else {
+              res.send({
+                  message: `Cannot update TransactionModel with . Maybe TransactionModel was not found or req.body is empty!`
+              });
+          }
+      })
+      .catch(err => {
+          res.status(500).send({
+              message: err 
+          });
+      });
+};
+
+exports.exportToServiceCenter = (req, res) => {
+  TransactionModel.update(
+      {
+          received: "Received"
+      },
+      { where: { 
+        destination: req.body.warehouseID, 
+        source: req.body.factoryID 
+      } }
       )
       .then(num => {
           if (num == 1) {

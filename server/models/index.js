@@ -13,6 +13,7 @@ const WarehouseModel = require("./warehouse.models");
 const requestModel = require('./request.model')
 const TransactionModel= require('./transaction.model')
 const ExportToWarehouse = require('./exportToWarehouse.model')
+const ExportToStore = require('./exportToStore.model')
 const ROLES = ["admin", "factory", "store", "servicecenter"];
 // const ROLES = ["factory", "store", "servicecenter"]
 
@@ -26,6 +27,27 @@ FactoryModel.hasMany(StoreModel, {
 FactoryModel.hasMany(ExportToWarehouse, {
   foreignKey: {
     name: "factoryID",
+    allowNull: false,
+  },
+});
+
+WarehouseModel.hasMany(ExportToWarehouse, {
+  foreignKey: {
+    name: "warehouseID",
+    allowNull: false,
+  },
+});
+
+StoreModel.hasMany(ExportToStore, {
+  foreignKey: {
+    name: "storeID",
+    allowNull: false,
+  },
+});
+
+WarehouseModel.hasMany(ExportToStore, {
+  foreignKey: {
+    name: "warehouseID",
     allowNull: false,
   },
 });
@@ -131,5 +153,6 @@ module.exports = {
   requestModel,
   TransactionModel,
   ExportToWarehouse,
-  ROLES,
+  ExportToStore,
+  ROLES
 };

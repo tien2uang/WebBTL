@@ -7,6 +7,8 @@ const CustomerModel = dbConfig.define(
         customerID: {
             type: DataTypes.STRING,
             primaryKey: true,
+            autoIncrement: true,
+            defaultValue: 101,
             allowNull: false
         },
         customerName: {

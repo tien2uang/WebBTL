@@ -26,6 +26,10 @@ const WarrantyModel = dbConfig.define(
             type: DataTypes.STRING,
             allowNull: false
         },
+        date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false
+        }
     },
     {
         freezeTableName: true,

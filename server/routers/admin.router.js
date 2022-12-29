@@ -11,7 +11,8 @@ const {
   warrantyController,
   productRecallController,
   AuthController,
-  requestController
+  requestController,
+  credentialController
 } = require("../controllers/index");
 
 
@@ -304,6 +305,12 @@ router.post(
   AuthController.signup
 )
 
+/*********************get all credentials********************************* */
+router.get(
+  "/credentials",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  credentialController.findAll
+)
 
 
 module.exports = router;

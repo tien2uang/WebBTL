@@ -1,5 +1,5 @@
 const config = require("../config/auth.config");
-const { credentialModel, RoleModel, requestModel } = require('../models/index')
+const { credentialModel, requestModel } = require('../models/index')
 const { Sequelize } = require('sequelize')
 const Op = Sequelize.Op
 
