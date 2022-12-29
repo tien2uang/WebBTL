@@ -1,5 +1,4 @@
 const { TransactionModel } = require("../models/index");
-const sequelize = require("../config/db.config");
 
 exports.findAll = async (req, res) => {
   try {

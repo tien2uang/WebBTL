@@ -39,7 +39,7 @@ exports.create = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Some error occurred while creating the service center.",
+        message: err,
       });
     });
 };
@@ -66,7 +66,7 @@ exports.update = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating ServiceCenterModel with id=" + servicecenterID,
+        message: err,
       });
     });
 };
@@ -90,7 +90,7 @@ exports.delete = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Service center with id=" + servicecenterID,
+        message: err
       });
     });
 };

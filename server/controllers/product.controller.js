@@ -44,7 +44,7 @@ exports.create = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Some error occurred while creating the product.",
+        message: err,
       });
     });
 };
@@ -77,7 +77,7 @@ exports.update = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating ProductModel with id=" + productID,
+        message: err,
       });
     });
 };
@@ -101,7 +101,7 @@ exports.delete = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete product with id=" + productID,
+        message: err,
       });
     });
 };

@@ -1,8 +1,5 @@
 const config = require("../config/auth.config");
 const { credentialModel, requestModel } = require("../models/index");
-const { Sequelize } = require("sequelize");
-const Op = Sequelize.Op;
-
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 

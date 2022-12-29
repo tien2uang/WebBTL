@@ -10,13 +10,13 @@ const StoreModel = require("./store.model.js");
 const WarrantyModel = require("./warranty.model.js");
 const credentialModel = require("./credential.model");
 const WarehouseModel = require("./warehouse.models");
-const requestModel = require('./request.model')
-const TransactionModel= require('./transaction.model')
-const ExportToWarehouse = require('./exportToWarehouse.model')
-const ExportToStore = require('./exportToStore.model')
-const sendToServiceCenter = require('./sendToServicecenter.model')
-const ExportToStoreWarehouse = require('./exportToStoreWarehouse.model')
-const storeWarehouseModel = require('./storeWarehouse.model');
+const requestModel = require("./request.model");
+const TransactionModel = require("./transaction.model");
+const ExportToWarehouse = require("./exportToWarehouse.model");
+const ExportToStore = require("./exportToStore.model");
+const sendToServiceCenter = require("./sendToServicecenter.model");
+const ExportToStoreWarehouse = require("./exportToStoreWarehouse.model");
+const storeWarehouseModel = require("./storeWarehouse.model");
 const ROLES = ["admin", "factory", "store", "servicecenter"];
 // const ROLES = ["factory", "store", "servicecenter"]
 
@@ -83,14 +83,12 @@ WarehouseModel.hasMany(ExportToStore, {
   },
 });
 
-
 storeWarehouseModel.hasMany(ExportToStoreWarehouse, {
   foreignKey: {
     name: "storeWarehouseID",
     allowNull: false,
   },
 });
-
 
 StoreModel.hasMany(ProductlineModel, {
   foreignKey: {
@@ -196,5 +194,5 @@ module.exports = {
   ExportToStoreWarehouse,
   storeWarehouseModel,
   sendToServiceCenter,
-  ROLES
+  ROLES,
 };

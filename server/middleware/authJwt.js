@@ -24,54 +24,54 @@ verifyToken = (req, res, next) => {
 
 isAdmin = (req, res, next) => {
   credentialModel.findByPk(req.userId).then((user) => {
-        if (user.role === "admin") {
-          next();
-          return;
-        }
-      res.status(403).send({
-        message: "Require Admin Role!",
-      });
+    if (user.role === "admin") {
+      next();
       return;
+    }
+    res.status(403).send({
+      message: "Require Admin Role!",
     });
+    return;
+  });
 };
 
 isFactory = (req, res, next) => {
   credentialModel.findByPk(req.userId).then((user) => {
-        if (user.role === "factory") {
-          next();
-          return;
-        }
-      res.status(403).send({
-        message: "Require factory Role!",
-      });
+    if (user.role === "factory") {
+      next();
       return;
+    }
+    res.status(403).send({
+      message: "Require factory Role!",
     });
+    return;
+  });
 };
 
 isStore = (req, res, next) => {
   credentialModel.findByPk(req.userId).then((user) => {
-        if (user.role === "store") {
-          next();
-          return;
-        }
-      res.status(403).send({
-        message: "Require store Role!",
-      });
+    if (user.role === "store") {
+      next();
       return;
+    }
+    res.status(403).send({
+      message: "Require store Role!",
     });
+    return;
+  });
 };
 
 isServiceCenter = (req, res, next) => {
   credentialModel.findByPk(req.userId).then((user) => {
-        if (user.role === "servicecenter") {
-          next();
-          return;
-        }
-      res.status(403).send({
-        message: "Require servicecenter Role!",
-      });
+    if (user.role === "servicecenter") {
+      next();
       return;
+    }
+    res.status(403).send({
+      message: "Require servicecenter Role!",
     });
+    return;
+  });
 };
 
 const authJwt = {

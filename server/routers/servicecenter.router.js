@@ -7,7 +7,6 @@ const {
 } = require("../controllers/index");
 const router = express.Router();
 
-
 // Nhận các sản phẩm bảo hành hoặc triệu hồi từ đại lý.
 router.put(
   "/warranty/receive",

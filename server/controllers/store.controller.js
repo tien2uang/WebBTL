@@ -37,7 +37,7 @@ exports.create = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Some error occurred while creating the store.",
+        message: err,
       });
     });
 };
@@ -65,7 +65,7 @@ exports.update = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating StoreModel with id=" + storeID,
+        message: err,
       });
     });
 };
@@ -89,7 +89,7 @@ exports.delete = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Store with id=" + storeID,
+        message: err,
       });
     });
 };

@@ -7,10 +7,10 @@ const {
   productRecallController,
   ExportToStoreWarehouseController,
   TransactionController,
-  sendToServiceCenterController
+  sendToServiceCenterController,
 } = require("../controllers/index");
 
-const router = express.Router(); 
+const router = express.Router();
 
 router.get(
   "/findall",
@@ -32,7 +32,7 @@ router.post(
   TransactionController.exportToStoreWarehouse
 );
 
-// ban sp 
+// ban sp
 router.post(
   "/sell",
   [authJwt.verifyToken, authJwt.isStore],

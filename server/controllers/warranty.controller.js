@@ -175,16 +175,16 @@ exports.delete = (req, res) => {
   WarrantyModel.destroy({
     where: { warrantyStatus: "Done" },
   })
-  .then(() => {
-    res.send({
-      message: "Success!",
+    .then(() => {
+      res.send({
+        message: "Success!",
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err,
+      });
     });
-  })
-  .catch((err) => {
-    res.status(500).send({
-      message: err,
-    });
-  });
 };
 
 exports.return = async (req, res) => {
@@ -208,16 +208,16 @@ exports.return = async (req, res) => {
   WarrantyModel.destroy({
     where: { warrantyStatus: "Return to factory" },
   })
-  .then(() => {
-    res.send({
-      message: "Success!",
+    .then(() => {
+      res.send({
+        message: "Success!",
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err,
+      });
     });
-  })
-  .catch((err) => {
-    res.status(500).send({
-      message: err,
-    });
-  });
 };
 
 exports.warrantyByMonth = async (req, res) => {

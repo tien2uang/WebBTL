@@ -1,31 +1,31 @@
-const dbConfig = require('../config/db.config')
-const { DataTypes } = require('sequelize')
+const dbConfig = require("../config/db.config");
+const { DataTypes } = require("sequelize");
 
 const ExportToWarehouse = dbConfig.define(
-    'export_to_warehouse', 
-    {
-        warehouseID: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        factoryID: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        productLine: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        numberOfProduct: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        }
+  "export_to_warehouse",
+  {
+    warehouseID: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    {
-        freezeTableName: true,
-        timestamps: false
-    }
-)
+    factoryID: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    productLine: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    numberOfProduct: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  }
+);
 
 // ExportToWarehouse.associate = (models) => {
 //     ExportToWarehouse.belongsTo(models.FactoryModel, {
@@ -33,4 +33,4 @@ const ExportToWarehouse = dbConfig.define(
 //     })
 // }
 
-module.exports = ExportToWarehouse
+module.exports = ExportToWarehouse;

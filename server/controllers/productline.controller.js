@@ -49,7 +49,7 @@ exports.create = async (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the productline.",
+          err.message,
       });
     });
 };
@@ -78,7 +78,7 @@ exports.update = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating ProductlineModel with id=" + productLine,
+        message: err,
       });
     });
 };
@@ -102,7 +102,7 @@ exports.delete = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete productline with id=" + productLine,
+        message: err,
       });
     });
 };
