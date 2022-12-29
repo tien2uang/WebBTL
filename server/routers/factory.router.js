@@ -43,13 +43,13 @@ router.get(
 // thống kê sản phẩm bán được theo tháng
 router.get(
   "/order/sales/month/:month",
-  [authJwt.verifyToken, authJwt.isFactory], 
+  [authJwt.verifyToken, authJwt.isFactory],
   orderController.salesByMonth
 );
 // thống kê sản phẩm bán được theo năm
 router.get(
   "/order/sales/year/:year",
-  [authJwt.verifyToken, authJwt.isFactory], 
+  [authJwt.verifyToken, authJwt.isFactory],
   orderController.salesByYear
 );
 
@@ -64,13 +64,13 @@ router.get(
 // thống kê sản phẩm theo tháng (ngày nhập - importDate)
 router.get(
   "/product/view/month/:month",
-  [authJwt.verifyToken, authJwt.isFactory], 
+  [authJwt.verifyToken, authJwt.isFactory],
   productController.viewByMonth
 );
 // thống kê sản phẩm theo năm (ngày nhập - importDate)
 router.get(
   "/product/view/year/:year",
-  [authJwt.verifyToken, authJwt.isFactory], 
+  [authJwt.verifyToken, authJwt.isFactory],
   productController.viewByYear
 );
 
@@ -78,13 +78,13 @@ router.get(
 // thống kê sản phẩm đã bán
 router.get(
   "/product/sold",
-  [authJwt.verifyToken, authJwt.isFactory], 
+  [authJwt.verifyToken, authJwt.isFactory],
   productController.getSold
 );
 // thống kê sản phẩm chưa bán
 router.get(
   "/product/unsold",
-  [authJwt.verifyToken, authJwt.isFactory], 
+  [authJwt.verifyToken, authJwt.isFactory],
   productController.Unsold
 );
 
@@ -92,13 +92,13 @@ router.get(
 // lấy thông tin tất cả kho
 router.get(
   "/warehouse/findall",
-  [authJwt.verifyToken, authJwt.isFactory], 
+  [authJwt.verifyToken, authJwt.isFactory],
   WarehouseController.findAll
 )
 // lấy thông tin từng kho
 router.get(
   "/warehouse/find/:warehouseID",
-  [authJwt.verifyToken, authJwt.isFactory], 
+  [authJwt.verifyToken, authJwt.isFactory],
   WarehouseController.findOne
 )
 // nhập sản phẩm mới vào kho

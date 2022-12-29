@@ -2,10 +2,12 @@ import { createContext, useEffect, useReducer } from "react";
 import {AuthReducer } from "./AuthReducer";
  
 
- const INITIAL_STATE = {
-     user: JSON.parse(localStorage.getItem("user")) || null,
+
+const INITIAL_STATE = {
+     user:  localStorage.getItem("user")||"",
      error: false,
-     role: null
+     role: localStorage.getItem("role")||"",
+     token: localStorage.getItem("token")||"",
  };
 
 
@@ -15,7 +17,9 @@ import {AuthReducer } from "./AuthReducer";
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
     
     useEffect(()=>{
-      localStorage.setItem("user", JSON.stringify(state.user))
+      localStorage.setItem("user", state.user)
+      localStorage.setItem("token",state.token)
+      localStorage.setItem("role",state.role)
       console.log("Local user change")
     },[state.user])
 
@@ -27,6 +31,7 @@ import {AuthReducer } from "./AuthReducer";
           user: state.user,
           error: state.error,
           role:state.role,
+          token:state.token,
           dispatch,
         }}
       >

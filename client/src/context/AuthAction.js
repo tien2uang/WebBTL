@@ -29,3 +29,6 @@ export const SignUpFailure = (err) => ({
     payload: err,
 
 })
+export const LogoutStart =() => ({
+    type:"LOGOUT_START"
+})
