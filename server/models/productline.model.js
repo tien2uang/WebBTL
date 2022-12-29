@@ -20,7 +20,8 @@ const ProductlineModel = dbConfig.define(
         importDate: {
             type: DataTypes.DATEONLY,
             allowNull: false
-        }
+        },
+        
     },
     {
         freezeTableName: true,
