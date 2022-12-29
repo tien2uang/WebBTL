@@ -1,8 +1,5 @@
 const sequelize = require("../config/db.config");
-const { 
-  WarrantyModel,
-  TransactionModel
-} = require("../models/index");
+const { WarrantyModel, TransactionModel } = require("../models/index");
 
 exports.findAll = async (req, res) => {
   try {
@@ -152,7 +149,7 @@ exports.create = async (req, res) => {
     servicecenterID: req.body.servicecenterID,
     customerID: req.body.customerID,
     warrantyStatus: req.body.warrantyStatus,
-    date: req.body.date
+    date: req.body.date,
   };
   const transaction = {
     source: req.body.storeID,
@@ -165,7 +162,7 @@ exports.create = async (req, res) => {
   WarrantyModel.create(warranties)
     .then((data) => {
       res.send(data);
-      TransactionModel.create(transaction)
+      TransactionModel.create(transaction);
     })
     .catch((err) => {
       res.status(500).send({
@@ -178,44 +175,50 @@ exports.delete = (req, res) => {
   WarrantyModel.destroy({
     where: { warrantyStatus: "Done" },
   })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "Success!",
-        });
-      } else {
-        res.send({
-          message: `Cannot delete!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err,
-      });
+  .then(() => {
+    res.send({
+      message: "Success!",
     });
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err,
+    });
+  });
 };
 
 exports.return = async (req, res) => {
-  try {
-    const [warranty] = await sequelize.query(
-      "select id, warrantyStatus, \
-            c.customerID, customerName, customerPhone, customerAddress,\
-            p.*\
-            from warranty w \
-            join customers c \
-            on w.customerID = c.customerID\
-            join products p \
-            on c.productID = p.productID\
-            where warrantyStatus = 'Return to factory'\
-            "
-    );
-    res.json(warranty);
-  } catch (err) {
-    console.log(err);
-  }
+  // try {
+  //   const [warranty] = await sequelize.query(
+  //     "select id, warrantyStatus, \
+  //     c.customerID, customerName, customerPhone, customerAddress,\
+  //     p.*\
+  //     from warranty w \
+  //     join customers c \
+  //     on w.customerID = c.customerID\
+  //     join products p \
+  //     on c.productID = p.productID\
+  //     where warrantyStatus = 'Return to factory'\
+  //     "
+  //   );
+  //   res.json(warranty);
+  // } catch (err) {
+  //   console.log(err);
+  // }
+  WarrantyModel.destroy({
+    where: { warrantyStatus: "Return to factory" },
+  })
+  .then(() => {
+    res.send({
+      message: "Success!",
+    });
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err,
+    });
+  });
 };
-
 
 exports.warrantyByMonth = async (req, res) => {
   try {

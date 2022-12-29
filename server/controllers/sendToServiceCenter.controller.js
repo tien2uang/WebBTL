@@ -18,7 +18,7 @@ exports.create = async (req, res) => {
     destination: req.body.servicecenterID,
     sent: "Sent",
     received: "Not received",
-    action: "Send to service center",
+    action: "Send to service center for warranty",
   };
 
   sendToServiceCenter.create(warehouse)
@@ -28,7 +28,7 @@ exports.create = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Some error occurred while exporting.",
+        message: err,
       });
     });
 };

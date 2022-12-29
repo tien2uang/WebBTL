@@ -1,22 +1,19 @@
 const { authJwt } = require("../middleware");
 const express = require("express");
 const {
-  serviceCenterController,
-  productController,
-  orderController,
   warrantyController,
   productRecallController,
-  TransactionController
+  TransactionController,
 } = require("../controllers/index");
 const router = express.Router();
 
 
 // Nhận các sản phẩm bảo hành hoặc triệu hồi từ đại lý.
-// router.get(
-//   "/warranty/receive",
-//   [authJwt.verifyToken, authJwt.isServiceCenter],
-//   TransactionController.
-// );
+router.put(
+  "/warranty/receive",
+  [authJwt.verifyToken, authJwt.isServiceCenter],
+  TransactionController.sendToServiceCenter
+);
 
 router.get(
   "/warranty/store/findall",
@@ -117,11 +114,13 @@ router.get(
   [authJwt.verifyToken, authJwt.isServiceCenter],
   warrantyController.warrantyByQuarter
 );
+
 router.get(
   "/warranty/view/month/:month",
   [authJwt.verifyToken, authJwt.isServiceCenter],
   warrantyController.warrantyByMonth
 );
+
 router.get(
   "/warranty/view/year/:year",
   [authJwt.verifyToken, authJwt.isServiceCenter],

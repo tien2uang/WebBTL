@@ -4,17 +4,16 @@ const {
   storeController,
   orderController,
   productController,
-  warrantyController,
   productRecallController,
   ExportToStoreWarehouseController,
-  TransactionController
+  TransactionController,
+  sendToServiceCenterController
 } = require("../controllers/index");
 
-const router = express.Router();
+const router = express.Router(); 
 
-// find all
 router.get(
-  "/",
+  "/findall",
   [authJwt.verifyToken, authJwt.isStore],
   storeController.findAll
 );
@@ -35,7 +34,7 @@ router.post(
 
 // ban sp 
 router.post(
-  "/order/create",
+  "/sell",
   [authJwt.verifyToken, authJwt.isStore],
   orderController.create
 );
@@ -86,7 +85,7 @@ router.get(
 router.post(
   "/warranty/send",
   [authJwt.verifyToken, authJwt.isStore],
-  warrantyController.create
+  sendToServiceCenterController.create
 );
 
 /** trieu hoi */
