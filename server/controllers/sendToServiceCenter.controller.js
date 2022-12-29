@@ -1,27 +1,27 @@
-const { ExportToWarehouse, TransactionModel } = require("../models/index");
+const { sendToServiceCenter, TransactionModel } = require("../models/index");
 
 exports.create = async (req, res) => {
-  if (!req.body.warehouseID) {
+  if (!req.body.servicecenterID) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
     return;
   }
   const warehouse = {
-    warehouseID: req.body.warehouseID,
-    factoryID: req.body.factoryID,
-    productLine: req.body.productLine,
-    numberOfProduct: req.body.numberOfProduct,
+    servicecenterID: req.body.servicecenterID,
+    storeID: req.body.storeID,
+    customerID: req.body.customerID,
+    time: req.body.time,
   };
   const transaction = {
-    source: req.body.factoryID,
-    destination: req.body.warehouseID,
+    source: req.body.storeID,
+    destination: req.body.servicecenterID,
     sent: "Sent",
     received: "Not received",
-    action: "Export to warehouse",
+    action: "Send to service center",
   };
 
-  ExportToWarehouse.create(warehouse)
+  sendToServiceCenter.create(warehouse)
     .then((data) => {
       res.send(data);
       TransactionModel.create(transaction);

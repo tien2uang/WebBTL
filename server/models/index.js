@@ -195,5 +195,6 @@ module.exports = {
   ExportToStore,
   ExportToStoreWarehouse,
   storeWarehouseModel,
+  sendToServiceCenter,
   ROLES
 };

@@ -120,3 +120,32 @@ exports.exportToServiceCenter = (req, res) => {
           });
       });
 };
+
+
+exports.exportToStoreWarehouse = (req, res) => {
+  TransactionModel.update(
+      {
+          received: "Received"
+      },
+      { where: { 
+        destination: req.body.storeWarehouseID, 
+        source: req.body.storeID
+      } }
+      )
+      .then(num => {
+          if (num == 1) {
+              res.send({
+                  message: "TransactionModel was updated successfully."
+              });
+          } else {
+              res.send({
+                  message: `Cannot update TransactionModel with . Maybe TransactionModel was not found or req.body is empty!`
+              });
+          }
+      })
+      .catch(err => {
+          res.status(500).send({
+              message: err 
+          });
+      });
+};

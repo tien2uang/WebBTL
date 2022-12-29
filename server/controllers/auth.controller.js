@@ -7,31 +7,19 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
+  const credential = {
+    username: req.body.username,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8),
+    role: req.body.role,
+  };
   credentialModel
-    .create({
-      username: req.body.username,
-      email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8),
-      role: req.body.role,
-    })
+    .create(credential)
     .then(() => {
       res.send({ message: "User registered successfully!" });
-    });
-
-  requestModel
-    .destroy({
-      where: { username: req.body.username },
-    })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "Success!",
-        });
-      } else {
-        res.send({
-          message: `Cannot delete!`,
-        });
-      }
+      requestModel.destroy({
+        where: { username: req.body.username },
+      });
     })
     .catch((err) => {
       res.status(500).send({

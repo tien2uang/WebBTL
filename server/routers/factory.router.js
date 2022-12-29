@@ -7,7 +7,6 @@ const {
   orderController,
   warrantyController,
   WarehouseController,
-  productlineController,
   TransactionController,
   ExportToWarehouseController,
   ExportToStoreController,

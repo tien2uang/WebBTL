@@ -6,6 +6,8 @@ const {
   productController,
   warrantyController,
   productRecallController,
+  ExportToStoreWarehouseController,
+  TransactionController
 } = require("../controllers/index");
 
 const router = express.Router();
@@ -17,7 +19,21 @@ router.get(
   storeController.findAll
 );
 
-// bans sp cho kh
+// export to store's warehouse
+router.post(
+  "/storewarehouse/export",
+  [authJwt.verifyToken, authJwt.isStore],
+  ExportToStoreWarehouseController.create
+);
+
+// store's warehouse successfully received
+router.post(
+  "/storewarehouse/receive",
+  [authJwt.verifyToken, authJwt.isStore],
+  TransactionController.exportToStoreWarehouse
+);
+
+// ban sp 
 router.post(
   "/order/create",
   [authJwt.verifyToken, authJwt.isStore],
