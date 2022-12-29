@@ -99,8 +99,8 @@ exports.exportToServiceCenter = (req, res) => {
           received: "Received"
       },
       { where: { 
-        destination: req.body.warehouseID, 
-        source: req.body.factoryID 
+        destination: req.body.servicecenterID, 
+        source: req.body.storeID
       } }
       )
       .then(num => {

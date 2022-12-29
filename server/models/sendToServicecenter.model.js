@@ -1,28 +1,23 @@
 const dbConfig = require('../config/db.config')
 const { DataTypes } = require('sequelize')
 
-const CustomerModel = dbConfig.define(
-    'customers', 
+const sendToServiceCenter = dbConfig.define(
+    'send_to_servicecenter', 
     {
+        storeID: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        servicecenterID: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         customerID: {
             type: DataTypes.STRING,
-            primaryKey: true,
             allowNull: false
         },
-        customerName: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        customerPhone: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        customerAddress: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        productID: {
-            type: DataTypes.STRING,
+        time: {
+            type: DataTypes.DATEONLY,
             allowNull: false
         }
     },
@@ -32,4 +27,4 @@ const CustomerModel = dbConfig.define(
     }
 )
 
-module.exports = CustomerModel
+module.exports = sendToServiceCenter

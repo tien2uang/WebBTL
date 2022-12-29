@@ -1,5 +1,8 @@
-const { WarrantyModel } = require("../models/index");
 const sequelize = require("../config/db.config");
+const { 
+  WarrantyModel,
+  TransactionModel
+} = require("../models/index");
 
 exports.findAll = async (req, res) => {
   try {
@@ -145,16 +148,24 @@ exports.create = async (req, res) => {
     return;
   }
   const warranties = {
-    id: req.body.id,
     storeID: req.body.storeID,
     servicecenterID: req.body.servicecenterID,
     customerID: req.body.customerID,
     warrantyStatus: req.body.warrantyStatus,
+    date: req.body.date
+  };
+  const transaction = {
+    source: req.body.storeID,
+    destination: req.body.servicecenterID,
+    sent: "Sent",
+    received: "Not received",
+    action: "Send to service center for warranty",
   };
 
   WarrantyModel.create(warranties)
     .then((data) => {
       res.send(data);
+      TransactionModel.create(transaction)
     })
     .catch((err) => {
       res.status(500).send({

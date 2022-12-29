@@ -16,6 +16,8 @@ exports.signup = (req, res) => {
     }).then(() => {
       res.send({ message: "User registered successfully!" })
     })
+
+    requestModel.destroy
 };
 
 exports.request = (req, res) => {

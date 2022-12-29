@@ -10,31 +10,34 @@ const {
 
 const router = express.Router();
 
-// bans sp cho kh
+// find all
 router.get(
   "/",
   [authJwt.verifyToken, authJwt.isStore],
   storeController.findAll
 );
 
-//
+// bans sp cho kh
 router.post(
   "/order/create",
   [authJwt.verifyToken, authJwt.isStore],
   orderController.create
 );
+
 // thống kê sản phẩm theo quys (ngày nhập - importDate)
 router.get(
   "/product/view/quarter/:quarter",
   [authJwt.verifyToken, authJwt.isStore],
   productController.viewByQuarter
 );
+
 // thống kê sản phẩm theo tháng (ngày nhập - importDate)
 router.get(
   "/product/view/month/:month",
   [authJwt.verifyToken, authJwt.isStore],
   productController.viewByMonth
 );
+
 // thống kê sản phẩm theo năm (ngày nhập - importDate)
 router.get(
   "/product/view/year/:year",
@@ -48,12 +51,14 @@ router.get(
   [authJwt.verifyToken, authJwt.isStore],
   orderController.salesByQuarter
 );
+
 // thống kê sản phẩm bán được theo tháng
 router.get(
   "/order/sales/month/:month",
   [authJwt.verifyToken, authJwt.isStore],
   orderController.salesByMonth
 );
+
 // thống kê sản phẩm bán được theo năm
 router.get(
   "/order/sales/year/:year",
@@ -61,6 +66,7 @@ router.get(
   orderController.salesByYear
 );
 
+// gửi cho TTBH
 router.post(
   "/warranty/send",
   [authJwt.verifyToken, authJwt.isStore],
@@ -69,42 +75,42 @@ router.post(
 
 /** trieu hoi */
 router.get(
-  "/allRecall/recall",
+  "/recall/findall",
   [authJwt.verifyToken, authJwt.isStore],
   productRecallController.allRecall
 );
 
 router.get(
-  "/recallByProductLine/:productline",
+  "/recall/productline/find/:productline",
   [authJwt.verifyToken, authJwt.isStore],
   productRecallController.recallByProductLine
 );
 
 router.get(
-  "/recallByProductLineAll/recall",
+  "/recall/productline/findall",
   [authJwt.verifyToken, authJwt.isStore],
   productRecallController.recallByProductLineAll
 );
 router.get(
-  "/recallByServiceCenter/:servicecenterID",
+  "/recall/servicecenter/find/:servicecenterID",
   [authJwt.verifyToken, authJwt.isStore],
   productRecallController.recallByServiceCenter
 );
 
 router.get(
-  "/recallByServiceCenterAll/recall",
+  "/recall/servicecenter/findall",
   [authJwt.verifyToken, authJwt.isStore],
   productRecallController.recallByServiceCenterAll
 );
 
 router.get(
-  "/recallByStore/:storeID",
+  "/recall/store/find/:storeID",
   [authJwt.verifyToken, authJwt.isStore],
   productRecallController.recallByStore
 );
 
 router.get(
-  "/recallByStoreAll/recall",
+  "/recall/store/findall",
   [authJwt.verifyToken, authJwt.isStore],
   productRecallController.recallByStoreAll
 );

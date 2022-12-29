@@ -14,6 +14,9 @@ const requestModel = require('./request.model')
 const TransactionModel= require('./transaction.model')
 const ExportToWarehouse = require('./exportToWarehouse.model')
 const ExportToStore = require('./exportToStore.model')
+const sendToServiceCenter = require('./sendToServicecenter.model')
+const ExportToStoreWarehouse = require('./exportToStoreWarehouse.model')
+const storeWarehouseModel = require('./storeWarehouse.model');
 const ROLES = ["admin", "factory", "store", "servicecenter"];
 // const ROLES = ["factory", "store", "servicecenter"]
 
@@ -38,7 +41,35 @@ WarehouseModel.hasMany(ExportToWarehouse, {
   },
 });
 
+StoreModel.hasMany(sendToServiceCenter, {
+  foreignKey: {
+    name: "storeID",
+    allowNull: false,
+  },
+});
+
+ServiceCenterModel.hasMany(sendToServiceCenter, {
+  foreignKey: {
+    name: "servicecenterID",
+    allowNull: false,
+  },
+});
+
+CustomerModel.hasMany(sendToServiceCenter, {
+  foreignKey: {
+    name: "customerID",
+    allowNull: false,
+  },
+});
+
 StoreModel.hasMany(ExportToStore, {
+  foreignKey: {
+    name: "storeID",
+    allowNull: false,
+  },
+});
+
+StoreModel.hasMany(ExportToStoreWarehouse, {
   foreignKey: {
     name: "storeID",
     allowNull: false,
@@ -48,6 +79,14 @@ StoreModel.hasMany(ExportToStore, {
 WarehouseModel.hasMany(ExportToStore, {
   foreignKey: {
     name: "warehouseID",
+    allowNull: false,
+  },
+});
+
+
+storeWarehouseModel.hasMany(ExportToStoreWarehouse, {
+  foreignKey: {
+    name: "storeWarehouseID",
     allowNull: false,
   },
 });
@@ -154,5 +193,7 @@ module.exports = {
   TransactionModel,
   ExportToWarehouse,
   ExportToStore,
+  ExportToStoreWarehouse,
+  storeWarehouseModel,
   ROLES
 };
