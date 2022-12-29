@@ -2,12 +2,14 @@ const { authJwt } = require("../middleware");
 const express = require("express");
 const router = express.Router();
 const {
-  storeController,
   serviceCenterController,
   productController,
   orderController,
   warrantyController,
-  WarehouseController
+  WarehouseController,
+  productlineController,
+  TransactionController,
+  ExportToWarehouseController
 } = require("../controllers/index");
 
 
@@ -103,15 +105,27 @@ router.get(
 router.post(
   "/warehouse/import",
   [authJwt.verifyToken, authJwt.isFactory], 
-  WarehouseController.create
+  ExportToWarehouseController.create
 )
+// kho nhận sản phẩm từ factory
+router.put(
+  "/warehouse/receive", 
+  [authJwt.verifyToken, authJwt.isFactory],
+  TransactionController.update
+);
 
 /*********************Export to store********************************* */
 // xuất sản phẩm cho store
 router.post(
   "/store/export",
   [authJwt.verifyToken, authJwt.isFactory],
-  storeController.create
+  productlineController.create
+);
+// store nhận sản phẩm từ factory
+router.put(
+  "/store/receive", 
+  [authJwt.verifyToken, authJwt.isFactory],
+  TransactionController.update
 );
 
 /*********************Receive from service center********************************* */

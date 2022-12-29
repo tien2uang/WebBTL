@@ -1,15 +1,23 @@
 const dbConfig = require('../config/db.config')
 const { DataTypes } = require('sequelize')
 
-const WarehouseModel = dbConfig.define(
-    'warehouse', 
+const credentialModel = dbConfig.define(
+    'request_account',
     {
-        warehouseID: {
+        username: {
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false
         },
-        address: {
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        role: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -20,4 +28,4 @@ const WarehouseModel = dbConfig.define(
     }
 )
 
-module.exports = WarehouseModel
+module.exports = credentialModel

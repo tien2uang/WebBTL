@@ -9,7 +9,9 @@ const {
   productController,
   orderController,
   warrantyController,
-  productRecallController
+  productRecallController,
+  AuthController,
+  requestController
 } = require("../controllers/index");
 
 
@@ -288,6 +290,20 @@ router.get(
   [authJwt.verifyToken, authJwt.isAdmin],
   productRecallController.recallByStoreAll
 )
+
+/*********************request********************************* */
+router.get(
+  "/request/all",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  requestController.findAll
+)
+
+router.post(
+  "/request/approval",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  AuthController.signup
+)
+
 
 
 module.exports = router;

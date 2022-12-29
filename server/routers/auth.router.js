@@ -4,12 +4,21 @@ const express = require('express')
 const router = express.Router()
 
 router.post(
-  "/signup",
+  "/admin",
   [
     verifySignUp.checkDuplicateUsernameOrEmail,
     verifySignUp.checkRolesExisted
   ],
   AuthController.signup
+);
+
+router.post(
+  "/signup",
+  [
+    verifySignUp.checkDuplicateUsernameOrEmail,
+    verifySignUp.checkRolesExisted
+  ],
+  AuthController.request
 );
 
 router.post("/signin", AuthController.signin);

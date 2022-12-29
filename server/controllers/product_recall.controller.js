@@ -48,7 +48,7 @@ exports.recallByProductLine = async(req, res) => {
             on product_recall.customerID = customers.customerID\
             join products\
             on customers.productID = products.productID\
-            where productLine = :productline", 
+            where products.productLine = :productline", 
             { replacements: { productline: req.params.productline } })
         res.json(recall)
     } catch (err) {

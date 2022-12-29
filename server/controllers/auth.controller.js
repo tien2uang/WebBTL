@@ -1,37 +1,34 @@
 const config = require("../config/auth.config");
-const { credentialModel, RoleModel } = require('../models/index')
+const { credentialModel, RoleModel, requestModel } = require('../models/index')
 const { Sequelize } = require('sequelize')
 const Op = Sequelize.Op
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
+
 exports.signup = (req, res) => {
-  // Save User to Database
   credentialModel.create({
-    username: req.body.username,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
-  })
-    .then(user => {
-      if (req.body.roles) {
-        RoleModel.findAll({
-          where: {
-            name: {
-              [Op.or]: req.body.roles
-            }
-          }
-        }).then(roles => {
-          user.setRoles(roles).then(() => {
-            res.send({ message: "User registered successfully!" });
-          });
-        });
-      } 
+      username: req.body.username,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 8),
+      role: req.body.role
+    }).then(() => {
+      res.send({ message: "User registered successfully!" })
     })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
-    });
 };
+
+exports.request = (req, res) => {
+  requestModel.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 8),
+      role: req.body.role
+    }).then(() => {
+      res.send({ message: "Please wait while admin processing your request!" })
+    })
+};
+
 
 exports.signin = (req, res) => {
   credentialModel.findOne({
@@ -60,18 +57,12 @@ exports.signin = (req, res) => {
         expiresIn: 86400 // 24 hours
       });
 
-      var authorities = [];
-      user.getRoles().then(roles => {
-        for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].name.toUpperCase());
-        }
+      var roles = "ROLE_" + user.role.toUpperCase()
         res.status(200).send({
-          id: user.id,
           username: user.username,
           email: user.email,
-          roles: authorities,
+          role: roles,
           accessToken: token
-        });
       });
     })
     .catch(err => {

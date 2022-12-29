@@ -1,4 +1,4 @@
-const { ProductlineModel } = require('../models/index')
+const { ProductlineModel, TransactionModel } = require('../models/index')
 
 exports.findAll = async (req, res) => {
     try {
@@ -32,10 +32,18 @@ exports.create = async (req, res) => {
         description: req.body.description,
         importDate: req.body.importDate,
     };
+    const transaction = {
+        source: req.body.storeID,
+        destination: req.body.storeID,
+        sent: "Sent",
+        received: "Not received",
+        action: "Export to warehouse",
+      };
 
     ProductlineModel.create(productline)
         .then(data => {
             res.send(data);
+            TransactionModel.create(transaction)
         })
         .catch(err => {
             res.status(500).send({

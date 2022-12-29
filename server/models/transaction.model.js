@@ -1,22 +1,26 @@
 const dbConfig = require('../config/db.config')
 const { DataTypes } = require('sequelize')
 
-const credentialModel = dbConfig.define(
-    'credentials',
+const TransactionModel = dbConfig.define(
+    'transactions', 
     {
-        username: {
+        source: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        email: {
+        destination: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        password: {
+        sent: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        role: {
+        received: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        action: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -27,4 +31,4 @@ const credentialModel = dbConfig.define(
     }
 )
 
-module.exports = credentialModel
+module.exports = TransactionModel

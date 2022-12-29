@@ -24,71 +24,54 @@ verifyToken = (req, res, next) => {
 
 isAdmin = (req, res, next) => {
   credentialModel.findByPk(req.userId).then((user) => {
-    user.getRoles().then((roles) => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
+        if (user.role === "admin") {
           next();
           return;
         }
-      }
-
       res.status(403).send({
         message: "Require Admin Role!",
       });
       return;
     });
-  });
-};
-
-isStore = (req, res, next) => {
-  credentialModel.findByPk(req.userId).then((user) => {
-    user.getRoles().then((roles) => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "store") {
-          next();
-          return;
-        }
-      }
-
-      res.status(403).send({
-        message: "Require Store Role!",
-      });
-    });
-  });
 };
 
 isFactory = (req, res, next) => {
   credentialModel.findByPk(req.userId).then((user) => {
-    user.getRoles().then((roles) => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "factory") {
+        if (user.role === "factory") {
           next();
           return;
         }
-      }
-
       res.status(403).send({
-        message: "Require Factory Role!",
+        message: "Require factory Role!",
       });
+      return;
     });
-  });
+};
+
+isStore = (req, res, next) => {
+  credentialModel.findByPk(req.userId).then((user) => {
+        if (user.role === "store") {
+          next();
+          return;
+        }
+      res.status(403).send({
+        message: "Require store Role!",
+      });
+      return;
+    });
 };
 
 isServiceCenter = (req, res, next) => {
   credentialModel.findByPk(req.userId).then((user) => {
-    user.getRoles().then((roles) => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "servicecenter") {
+        if (user.role === "servicecenter") {
           next();
           return;
         }
-      }
-
       res.status(403).send({
-        message: "Require Service Center Role!",
+        message: "Require servicecenter Role!",
       });
+      return;
     });
-  });
 };
 
 const authJwt = {
