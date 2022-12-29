@@ -17,8 +17,59 @@ import { useContext, useEffect,useState } from 'react';
 
 
 
-export function ProductlineDashboard() {
-    let data = [];
+export function StatusStatistics() {
+    let data = [
+        {
+            productID:"1",
+            productLine:"BMW",
+            productName:"BMW i8",
+            decription:"tuyet voi",
+            status:"Solded",
+            storeID:"1"
+        },
+        {
+            productID:"1",
+            productLine:"BMW",
+            productName:"BMW i10",
+            decription:"tuyet voi",
+            status:"Solded",
+            storeID:"1"
+        },
+        {
+            productID:"1",
+            productLine:"BMW",
+            productName:"BMW i11",
+            decription:"tuyet voi",
+            status:"Solded",
+            storeID:"1"
+        },
+        {
+            productID:"2",
+            productLine:"BMW",
+            productName:"BMW i10",
+            decription:"tuyet voi",
+            status:"Solded",
+            storeID:"1"
+        },
+        {
+            productID:"3",
+            productLine:"Mer",
+            productName:"Mer S400",
+            decription:"tuyet voi",
+            status:"Ready",
+            storeID:"1"
+        },
+        {
+            productID:"4",
+            productLine:"Mer",
+            productName:"Mer S500",
+            decription:"tuyet voi",
+            status:"Ready",
+            storeID:"1"
+        },
+
+
+    ];
     const { token } = useContext(AuthContext);
     const axiosOptions = {
         headers: {
@@ -28,25 +79,32 @@ export function ProductlineDashboard() {
     console.log("token", token)
     const columns = [
         {
+            name: 'ProductID',
+            selector: row => row.productID,
+            sortable: true,
+        },
+        {
             name: 'Productline',
             selector: row => row.productLine,
             sortable: true,
         },
         {
-            name: 'Store ID',
-            selector: row => row.storeID,
+            name: 'Product name',
+            selector: row => row.productName,
+            sortable: true,
+        },
+
+        {
+            name: 'Decription',
+            selector: row => row.decription,
             sortable: true,
         },
         {
-            name: 'Description',
-            selector: row => row.description,
+            name: 'Status',
+            selector: row => row.status,
             sortable: true,
         },
-        {
-            name: 'Import Date',
-            selector: row => row.importDate,
-            sortable: true,
-        },
+        
 
     ];
 
@@ -56,9 +114,9 @@ export function ProductlineDashboard() {
         const getData = async () => {
 
             try {
-                const res = await axios.get("http://localhost:8080/api/admin/productline/findall", axiosOptions);
+                const res = await axios.get("http://localhost:8080/api/admin/factory/findall", axiosOptions);
                 console.log(res.data);
-                data=res.data;
+                
                 setTableData({ columns, data })
             } catch (err) {
                 console.log(err);
@@ -74,7 +132,7 @@ export function ProductlineDashboard() {
                 <div className="page-header">
                     <Row>
                         <Col className="col">
-                            <h3 className="page-title">Productline Dashboard</h3>
+                            <h3 className="page-title">Factory </h3>
 
                         </Col>
                         <Col className="col-auto text-end float-right ms-auto">

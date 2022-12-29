@@ -5,56 +5,62 @@ import Logo from '../../components/assets/img/logo-white.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import axios from "axios";
-import { useContext, useRef,useEffect,useState } from "react";
+import { useContext, useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import {SignUpFailure,SignUpStart,SignUpSuccess} from "../../context/AuthAction";
+import { SignUpFailure, SignUpStart, SignUpSuccess } from "../../context/AuthAction";
 import { AuthContext } from "../../context/AuthContext";
+
+import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
 
 export function Register() {
 
 	const navigate = useNavigate();
-	const username =useRef();
+	const username = useRef();
 	const email = useRef();
-	const password= useRef();
-	const confirmedPassword=useRef(); 
-	const {error,dispatch}=useContext(AuthContext);
+	const password = useRef();
+	const confirmedPassword = useRef();
+	const { error, dispatch } = useContext(AuthContext);
+	const [modal, setModal] = useState(false);
+	
+	const handleSubmit = async (e) => {
 
-	const handleSubmit=  async(e)=>{
 		console.log("click");
 		e.preventDefault();
-		let roles= [];
-		console.log(username.current.value.substring(0,3))
-		switch(username.current.value.substring(0,3)) {
+		let role = "";
+		console.log(username.current.value.substring(0, 3))
+		switch (username.current.value.substring(0, 3)) {
 			case "Fac":
-				roles=['factory'];
+				role = 'factory';
 				break;
 			case "Sto":
-				roles=['store'];
+				role = 'store';
 				break;
 			case "SeC":
-				roles=["service center"];
+				role = "service center";
 				break;
 			case "OpC":
-				roles=['admin'];
+				role = 'admin';
 				break;
 
 		}
-		console.log(roles)
+		console.log(role)
 		const user = {
 			username: username.current.value,
-			email:email.current.value,
+			email: email.current.value,
 			password: password.current.value,
-			roles:roles
+			role: role
 		};
 
 		console.log(user)
-		if(password.current.value== confirmedPassword.current.value) {
+		if (password.current.value == confirmedPassword.current.value) {
 			dispatch(SignUpStart());
 			try {
-				const res= await axios.post("http://localhost:8080/api/auth/signup",user);
-				navigate("/signin")
+				const res = await axios.post("http://localhost:8080/api/auth/signup", user);
+				setModal(true);
+				// navigate("/signin")
 			}
-			catch (err){
+			catch (err) {
 				console.log(err);
 			}
 		}
@@ -65,6 +71,33 @@ export function Register() {
 
 	return (
 		<div className="main-wrapper login-body">
+			<Modal
+				show={modal}
+				onHide={()=> {
+					setModal(false);
+					navigate("/signin");
+				}}
+				backdrop="static"
+				keyboard={false}
+			>
+				<Modal.Header closeButton>
+					<Modal.Title>Reponse</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					Waiting for accept.
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="warning" onClick={()=> {
+					setModal(false);
+					navigate("/signin");
+				}}>
+						Close
+					</Button>
+					
+				</Modal.Footer>
+			</Modal>
+
+
 			<div className="login-wrapper">
 				<div className="container">
 					<div className="loginbox">
@@ -81,17 +114,18 @@ export function Register() {
 										<input className="form-control" type="text" placeholder="Username" ref={username} />
 									</div>
 									<div className="form-group">
-										<input className="form-control" type="text" placeholder="Email" ref ={email}/>
+										<input className="form-control" type="text" placeholder="Email" ref={email} />
 									</div>
 									<div className="form-group">
 										<input className="form-control" type="text" placeholder="Password" ref={password} />
 									</div>
 									<div className="form-group">
-										<input className="form-control" type="text" placeholder="Confirm Password" ref={confirmedPassword}/>
+										<input className="form-control" type="text" placeholder="Confirm Password" ref={confirmedPassword} />
 									</div>
+
 									<div className="form-group mb-0">
 										<a className="btn btn-primary btn-block" onClick={handleSubmit}>
-											Register
+											Submit Request
 										</a>
 									</div>
 								</form>
@@ -110,6 +144,7 @@ export function Register() {
 
 
 								<div className="text-center dont-have">Already have an account? <a href="/signIn">Login</a></div>
+
 							</div>
 						</div>
 					</div>

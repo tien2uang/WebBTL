@@ -34,6 +34,13 @@ import {AccountRequest} from "../pages/OC/Accounts/AccountsRequest";
 import {AddAccount} from  "../pages/OC/Accounts/AddAccount";
 import {OCTransactionList} from "../pages/OC/TransactionHistory/OCTransactionList";
 import { ProductlineDashboard } from "../pages/OC/Management/ProductlineDashboard";
+import { Factory } from "../pages/OC/Management/Factory";
+import { Store } from "../pages/OC/Management/Store";
+import { ServiceCenter } from "../pages/OC/Management/ServiceCenter";
+import { FactoryStatistics } from "../pages/OC/Statistics/FactoryStatistics";
+import { ServiceCenterStatistics } from "../pages/OC/Statistics/ServiceCenterStatistics";
+import { StatusStatistics } from "../pages/OC/Statistics/StatusStatistics";
+import { StoreStatistics } from "../pages/OC/Statistics/StoreStatistics";
 
 import {SCInsuranceList} from "../pages/SC/InsuranceStatistics/SCInsuranceList";
 import {SCTransactionList} from "../pages/SC/TransactionHistory/SCTransactionList";
@@ -96,11 +103,17 @@ function RouterComponent() {
                                 <Route path="/home/fac/transaction-list" element={user!=""  ?<FacTransactionList/>: <Navigate to="/signIn" />} />
                                 <Route path="/home/fac/statistics-list" element={user!=""  ? <List/>: <Navigate to="/signIn" />} />
 
-                                <Route path="/home/opc/dashboard" element={user!="" ?  <ProductlineDashboard/>: <Navigate to="/signIn" />} />
+                                <Route path="/home/opc/dashboard" element={user!="" ? <ProductlineDashboard/> : <Navigate to="/signIn" />} />
+                                <Route path="/home/opc/store-list" element={user!="" ?  <Store/>: <Navigate to="/signIn" />} />
+                                <Route path="/home/opc/factory-list" element={user!="" ?  <Factory/> : <Navigate to="/signIn" />} />
+                                <Route path="/home/opc/sc-list" element={user!="" ?  <ServiceCenter/>: <Navigate to="/signIn" />} />
                                 <Route path="/home/opc/account-list" element={user!=""  ?<AccountList/>: <Navigate to="/signIn" />} />
                                 <Route path="/home/opc/account-request" element={user!=""  ?<AccountRequest/>: <Navigate to="/signIn" />} />
                                 <Route path="/home/opc/add-account" element={user!=""  ? <AddAccount/>: <Navigate to="/signIn" />} />
-                                <Route path="/home/opc/transaction-list" element={ user!=""  ? <OCTransactionList/>: <Navigate to="/signIn" />} />
+                                <Route path="/home/opc/factory-statistics" element={ user!=""  ? <FactoryStatistics/>: <Navigate to="/signIn" />} />
+                                <Route path="/home/opc/status-statistics" element={ user!=""  ? <StatusStatistics/>: <Navigate to="/signIn" />} />
+                                <Route path="/home/opc/store-statistics" element={ user!=""  ? <StoreStatistics/>: <Navigate to="/signIn" />} />
+                                <Route path="/home/opc/service-statistics" element={ user!=""  ? <ServiceCenterStatistics/>: <Navigate to="/signIn" />} />
                             </Routes>
                         </div>
                         {/* <Route render={(props) => <Footer {...props} />} /> */}

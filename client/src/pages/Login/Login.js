@@ -80,7 +80,7 @@ export function Login() {
                                     <a href="#" className="facebook"><FontAwesomeIcon icon={faFacebookF} /></a><a href="#" className="google"><FontAwesomeIcon icon={faGoogle} /></a>
                                 </div>
 
-                                <div className="text-center dont-have">Don’t have an account? <a href="/register">Register</a></div>
+                                <div className="text-center dont-have">Don’t have an account? <a href="/register">Request</a></div>
                             </div>
                         </div>
                     </div>
